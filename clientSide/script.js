@@ -13,7 +13,7 @@ function loader(element) {
        
         element.textContent += '.';
 
-       
+        
         if (element.textContent === '....') {
             element.textContent = '';
         }
@@ -33,7 +33,8 @@ function typeText(element, text) {
     }, 20)
 }
 
-//genera id unico para cada caracter, asi se genera el efecto de escritura
+// genera un id unico al combinar fecha exacta con un numero random, este se le aplicara a cada
+//caracter devuelto por la ia para hacer el efecto de escritura
 function generateUniqueId() {
     const timestamp = Date.now();
     const randomNumber = Math.random();
@@ -81,10 +82,10 @@ const handleSubmit = async (e) => {
     
     const messageDiv = document.getElementById(uniqueId)
 
-    
+   
     loader(messageDiv)
 
-    const response = await fetch('https://gpt3codex.onrender.com', {
+    const response = await fetch('http://localhost:5000/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -99,7 +100,7 @@ const handleSubmit = async (e) => {
 
     if (response.ok) {
         const data = await response.json();
-        const parsedData = data.bot.trim() 
+        const parsedData = data.bot.trim()  
 
         typeText(messageDiv, parsedData)
     } else {
