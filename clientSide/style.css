@@ -127,14 +127,17 @@ form {
 textarea {
   width: 100%;
 
-  color: #fff;
+  color: rgb(41, 198, 255);
   font-size: 18px;
 
   padding: 10px;
-  background: transparent;
+  background: rgba(148, 148, 148,0.7);
   border-radius: 5px;
   border: none;
   outline: none;
+}
+textarea::placeholder{
+  color: aqua;
 }
 
 button {
