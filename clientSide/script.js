@@ -74,7 +74,7 @@ const handleSubmit = async (e) => {
 
     // bot
     const uniqueId = generateUniqueId()
-    chatContainer.innerHTML += chatStripe(true, " ", uniqueId)
+    chatContainer.innerHTML += chatStripe(true, "", uniqueId)
 
     
     chatContainer.scrollTop = chatContainer.scrollHeight;
@@ -96,7 +96,7 @@ const handleSubmit = async (e) => {
     })
 
     clearInterval(loadInterval)
-    messageDiv.innerHTML = " "
+    messageDiv.innerHTML = ""
 
     if (response.ok) {
         const data = await response.json();
@@ -117,3 +117,28 @@ form.addEventListener('keyup', (e) => {
         handleSubmit(e)
     }
 })
+
+// voz
+let rec
+
+if(!("webkitSpeechRecognition" in window)){
+    alert("el navegador no reconoce la app, por favor cambiar a otro navegador")
+}else{
+    rec = new webkitSpeechRecognition()
+    rec.continuous = true;
+    rec.lang = "es-mx", "en-us"
+    rec.interim = true 
+    rec.addEventListener('result', iniciar)
+    rec.addEventListener('audioend', () => {
+        console.log('Audio capturing ended');
+      });
+}
+
+function iniciar (e){
+    for(let i = e.resultIndex; i< e.results.length; i++){
+        document.getElementById('prompt').innerHTML= e.results[i][0].transcript
+    }
+}
+
+let btn = document.getElementById('voz')
+btn.addEventListener('click', ()=>{rec.start()})
